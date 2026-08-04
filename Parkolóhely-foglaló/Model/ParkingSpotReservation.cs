@@ -13,6 +13,6 @@ public class ParkingSpotReservation
 
     public override string ToString()
     {
-        return $"Reservation for {Spot} from {StartingTime} to {EndingTime} by {ReservedBy}";
+        return $"{Spot} reserved from {StartingTime} to {EndingTime} by {ReservedBy}";
     }
 }
