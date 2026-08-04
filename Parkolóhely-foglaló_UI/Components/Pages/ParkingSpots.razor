@@ -1,0 +1,41 @@
+﻿@using Parkolóhely_foglaló.DB
+@using Parkolóhely_foglaló.Model
+
+@page "/Spots"
+
+<h3>Parking Spots</h3>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+    @if (errorMessage != null)
+    {
+        <h3> @errorMessage </h3>
+    }
+    else if (parkingSpots == null)
+    {
+        <h3> Loading... </h3>
+    }
+    else if (parkingSpots.Count() == 0)
+    {
+        <h3> No Parking Spots Available </h3>
+    }
+    else {
+        @foreach (ParkingSpot spot in parkingSpots)
+        {
+            <ParkingSpotButton Spot="@spot" />
+        }
+    }
+</div>
+
+@code {
+    string? errorMessage = null;
+    List<ParkingSpot>? parkingSpots = null;
+    protected override async Task OnInitializedAsync() {
+        try {
+            parkingSpots = await DbApi.GetParkingSpots();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}

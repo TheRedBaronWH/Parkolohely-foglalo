@@ -1,0 +1,19 @@
+﻿@inject NavigationManager Navigation
+
+@page "/"
+
+<h3>Main Page</h3>
+
+<button @onclick="NavigateToSpots">View Spots and Reservations</button>
+<button @onclick="NavigateToReserve">Reserve a spot</button>
+
+@code {
+    private void NavigateToSpots()
+    {
+        Navigation.NavigateTo("/Spots");
+    }
+    private void NavigateToReserve()
+    {
+        Navigation.NavigateTo("/Reserve");
+    }
+}

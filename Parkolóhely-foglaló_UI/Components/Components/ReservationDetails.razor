@@ -1,0 +1,10 @@
+﻿@using Parkolóhely_foglaló.Model
+
+<div class="ReservationDetails">
+    <h1>From @Reservation.StartingTime until @Reservation.EndingTime</h1>
+    <h2>Reserved by: @Reservation.ReservedBy</h2>
+</div>
+
+@code {
+    [Parameter] public required ParkingSpotReservation Reservation { get; set; }
+}
