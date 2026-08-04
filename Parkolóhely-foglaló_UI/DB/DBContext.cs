@@ -30,10 +30,21 @@ public class ParkingDBContext: DbContext
             );
             SaveChanges();
         }
+        if (!Reservations.Any())
+        {
+            Reservations.AddRange(
+                new ParkingSpotReservation { ParkingSpotId = 1, StartingTime = new DateTime(2026, 08, 05, 18, 00, 00), EndingTime = new DateTime(2026, 08, 06, 18, 00, 00), ReservedBy = "User" },
+                new ParkingSpotReservation { ParkingSpotId = 2, StartingTime = new DateTime(2026, 12, 20, 12, 00, 00), EndingTime = new DateTime(2026, 12, 21, 21, 00, 00), ReservedBy = "User" },
+                new ParkingSpotReservation { ParkingSpotId = 3, StartingTime = new DateTime(2026, 08, 05, 18, 30, 00), EndingTime = new DateTime(2026, 08, 08, 09, 00, 00), ReservedBy = "User" },
+                new ParkingSpotReservation { ParkingSpotId = 1, StartingTime = new DateTime(2026, 08, 06, 18, 05, 00), EndingTime = new DateTime(2026, 08, 06, 18, 50, 00), ReservedBy = "User" }
+            );
+            SaveChanges();
+        }
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite($"Data Source={DbPath};Mode=ReadWriteCreate;Cache=Shared;");
+        optionsBuilder.EnableSensitiveDataLogging();
     }
 }
