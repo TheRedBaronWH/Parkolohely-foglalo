@@ -14,12 +14,53 @@ public static class DbApi
         }
     }
 
-    public static async Task<List<ParkingSpotReservation>> GetReservations(ParkingSpot Spot)
+    public static async Task<ParkingSpot> GetParkingSpot(int id)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            return await db.Spots
+                .Where(spot => spot.Id == id)
+                .FirstOrDefaultAsync();
+        }
+    }
+
+    public static async Task<List<ParkingSpot>> GetFreeParkingSpots(DateTime startingTime, DateTime endingTime)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            return await db.Spots
+                .Where(spot => !db.Reservations.Any(reservation => reservation.ParkingSpotId == spot.Id &&
+                                        reservation.StartingTime < endingTime &&
+                                        reservation.EndingTime > startingTime))
+                .ToListAsync();
+        }
+    }
+
+    public static async Task<ParkingSpotReservation> GetReservation(int reservationId)
     {
         using (var db = new ParkingDBContext())
         {
             return await db.Reservations
-                .Where(r => r.ParkingSpot == Spot)
+                .Where(r => r.Id == reservationId)
+                .FirstOrDefaultAsync();
+        }
+    }
+
+    public static async Task<List<ParkingSpotReservation>> GetReservations()
+    {
+        using (var db = new ParkingDBContext())
+        {
+            return await db.Reservations
+                .ToListAsync();
+        }
+    }
+
+    public static async Task<List<ParkingSpotReservation>> GetReservationsForSpot(ParkingSpot Spot)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            return await db.Reservations
+                .Where(r => r.ParkingSpotId == Spot.Id)
                 .ToListAsync();
         }
     }
@@ -42,6 +83,19 @@ public static class DbApi
         }
     }
 
+    public static async Task RemoveParkingSpot(int spotId)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            var spot = await db.Spots.FindAsync(spotId);
+            if (spot != null)
+            {
+                db.Spots.Remove(spot);
+                await db.SaveChangesAsync();
+            }
+        }
+    }
+
     public static async Task AddReservation(ParkingSpotReservation reservation)
     {
         using (var db = new ParkingDBContext())
@@ -57,6 +111,19 @@ public static class DbApi
         {
             db.Reservations.Remove(reservation);
             await db.SaveChangesAsync();
+        }
+    }
+
+    public static async Task RemoveReservation(int reservationId)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            var reservation = await db.Reservations.FindAsync(reservationId);
+            if (reservation != null)
+            {
+                db.Reservations.Remove(reservation);
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

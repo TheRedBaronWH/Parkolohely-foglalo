@@ -5,8 +5,8 @@ namespace Parkolóhely_foglaló.Model;
 public class ParkingSpot
 {
     [Key]
-    public int SpotId { get; set; }
-    public string Name => $"Spot {SpotId}";
+    public int Id { get; set; }
+    public string Name => $"Spot {Id}";
     public int Row { get; set; }
     public int Column { get; set; }
 
