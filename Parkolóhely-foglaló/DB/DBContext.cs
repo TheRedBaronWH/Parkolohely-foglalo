@@ -12,13 +12,17 @@ public class ParkingDBContext: DbContext
     public DbSet<ParkingSpot> Spots { get; set; }
     public DbSet<ParkingSpotReservation> Reservations { get; set; }
 
+    public string DbPath { get; }
+
     public ParkingDBContext()
     {
+        DbPath = @"..\..\..\parking.db";
+
         Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=parking.db");
+        optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
 }

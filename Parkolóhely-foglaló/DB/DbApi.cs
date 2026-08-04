@@ -3,9 +3,9 @@ using Parkolóhely_foglaló.Model;
 
 namespace Parkolóhely_foglaló.DB;
 
-public class DbApi
+public static class DbApi
 {
-    public async Task<List<ParkingSpot>> GetParkingSpots()
+    public static async Task<List<ParkingSpot>> GetParkingSpots()
     {
         using (var db = new ParkingDBContext())
         {
@@ -14,17 +14,17 @@ public class DbApi
         }
     }
 
-    public async Task<List<ParkingSpotReservation>> GetReservations(ParkingSpot Spot)
+    public static async Task<List<ParkingSpotReservation>> GetReservations(ParkingSpot Spot)
     {
         using (var db = new ParkingDBContext())
         {
             return await db.Reservations
-                .Where(r => r.Spot == Spot)
+                .Where(r => r.ParkingSpot == Spot)
                 .ToListAsync();
         }
     }
 
-    public async Task AddParkingSpot(ParkingSpot spot)
+    public static async Task AddParkingSpot(ParkingSpot spot)
     {
         using (var db = new ParkingDBContext())
         {
@@ -33,7 +33,7 @@ public class DbApi
         }
     }
 
-    public async Task RemoveParkingSpot(ParkingSpot spot)
+    public static async Task RemoveParkingSpot(ParkingSpot spot)
     {
         using (var db = new ParkingDBContext())
         {
@@ -42,7 +42,7 @@ public class DbApi
         }
     }
 
-    public async Task AddReservation(ParkingSpotReservation reservation)
+    public static async Task AddReservation(ParkingSpotReservation reservation)
     {
         using (var db = new ParkingDBContext())
         {
@@ -51,7 +51,7 @@ public class DbApi
         }
     }
 
-    public async Task RemoveReservation(ParkingSpotReservation reservation)
+    public static async Task RemoveReservation(ParkingSpotReservation reservation)
     {
         using (var db = new ParkingDBContext())
         {
