@@ -3,7 +3,11 @@
 @using Parkolóhely_foglaló.Model
 @using Parkolóhely_foglaló.Controller
 
+@inject IJSRuntime Js
+
 @page "/spots-user:{User}/{SpotId:int}"
+
+<button class="BackButton" @onclick="GoBack"> Back </button>
 
 @if (spotLoadErrorMessage != null)
 {
@@ -105,5 +109,10 @@ else
         {
             deletionMessage = ex.Message;
         }
+    }
+
+    public async Task GoBack()
+    {
+        await Js.InvokeVoidAsync("history.back");
     }
 }

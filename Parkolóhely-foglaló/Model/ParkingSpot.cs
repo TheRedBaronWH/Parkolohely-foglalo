@@ -5,7 +5,8 @@ public class ParkingSpot
 {
     [Key]
     public int Id { get; set; }
-    public string Name => $"Spot {Id}";
+    public bool Electric { get; set; }
+    public string Name => $"Spot {Id} {(Electric ? "- Electric" : "")}";
     public int Row { get; set; }
     public int Column { get; set; }
     public string Location => $"Row {Row}, Column {Column}";

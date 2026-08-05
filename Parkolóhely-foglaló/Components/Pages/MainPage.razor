@@ -10,9 +10,13 @@
     <h2 class="PageText">@message</h2>
 }
 
-<div class ="NameInput">
+<div class ="InputDiv">
     <label for="username">Username:</label>
     <input id="username" type="text" placeholder="Please enter your name" @bind="user"/>
+</div>
+<div class="InputDiv">
+    <label for="electric">Do you have an electric car and wish to charge?</label>
+    <input id="electric" type="checkbox" @bind="electric" />
 </div>
 <br/>
 
@@ -27,6 +31,7 @@
 
 @code {
     public string user = string.Empty;
+    public bool electric = false;
     public string message = string.Empty;
 
     private void NavigateToSpots()
@@ -44,6 +49,6 @@
             message = "Please enter your username first.";
             return;
         }
-        Navigation.NavigateTo($"/reserve-user:{user}");
+        Navigation.NavigateTo($"/reserve-user:{user}-electric:{electric}");
     }
 }

@@ -17,3 +17,9 @@
     width: 100vw;
     text-align: center;
 }
+
+.BackButton {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}

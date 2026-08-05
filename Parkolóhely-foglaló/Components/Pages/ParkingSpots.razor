@@ -3,8 +3,11 @@
 @using Parkolóhely_foglaló.Model
 
 @inject NavigationManager Navigation
+@inject IJSRuntime Js
 
 @page "/spots-user:{User}"
+
+<button class="BackButton" @onclick="GoBack"> Back </button>
 
 <h1 class="PageTitle">Parking Spots</h1>
 @if (errorMessage != null)
@@ -54,5 +57,10 @@ else
     public void NavigateToReservation(ParkingSpot spot)
     {
         Navigation.NavigateTo($"/spots-user:{User}/{spot.Id}");
+    }
+
+    public async Task GoBack()
+    {
+        await Js.InvokeVoidAsync("history.back");
     }
 }

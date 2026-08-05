@@ -3,7 +3,11 @@
 @using Parkolóhely_foglaló.Controller
 @using Parkolóhely_foglaló.Model
 
-@page "/reserve-user:{User}"
+@inject IJSRuntime Js
+
+@page "/reserve-user:{User}-electric:{Electric:bool}"
+
+<button class="BackButton" @onclick="GoBack"> Back </button>
 
 <h1 class="PageTitle">New Reservation for @User</h1>
 
@@ -55,6 +59,7 @@
 
 @code {
     [Parameter] public string User { get; set; }
+    [Parameter] public bool Electric { get; set; }
 
     public DateTime startingTime { get; set; } = DateTime.Now;
     public DateTime endingTime { get; set; } = DateTime.Now.AddHours(1);
@@ -71,7 +76,25 @@
             message = "Ending time must be after starting time!";
             return;
         }
-        freeSpots = await DbApi.GetFreeParkingSpots(startingTime, endingTime);
+
+        if(Electric)
+        {
+            freeSpots = await DbApi.GetFreeElectricParkingSpots(startingTime, endingTime);
+            if(freeSpots.Count == 0)
+            {
+                message = "No free electric parking spots available at the selected timeslot. Please choose a normal spot.";
+                freeSpots = await DbApi.GetFreeParkingSpots(startingTime, endingTime);
+            }
+        }
+        else
+        {
+            freeSpots = await DbApi.GetFreeNormalParkingSpots(startingTime, endingTime);
+            if (freeSpots.Count == 0)
+            {
+                message = "No free normal parking spots available at the selected timeslot. Please choose an electric spot.";
+                freeSpots = await DbApi.GetFreeElectricParkingSpots(startingTime, endingTime);
+            }
+        }
     }
 
     public List<ParkingSpot>? freeSpots = null;
@@ -100,5 +123,10 @@
         {
             message = ex.Message;
         }   
+    }
+
+    public async Task GoBack()
+    {
+        await Js.InvokeVoidAsync("history.back");
     }
 }

@@ -2,10 +2,11 @@
 .ParkingSpotsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-auto-rows: 1fr;
     gap: 16px;
 
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
 }
 
 .PageTitle {
@@ -16,4 +17,10 @@
 .PageText {
     width: 100vw;
     text-align: center;
+}
+
+.BackButton {
+    position: absolute;
+    top: 12px;
+    left: 12px;
 }
