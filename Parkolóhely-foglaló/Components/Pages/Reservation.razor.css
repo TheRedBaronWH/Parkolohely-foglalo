@@ -35,3 +35,9 @@
         min-width: 150px;
     }
 }
+
+.BackButton {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}

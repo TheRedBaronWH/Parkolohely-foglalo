@@ -1,6 +1,6 @@
 ﻿@using Parkolóhely_foglaló.Model
 
-<div class="ParkingSpotButton" @onclick="HandleClick">
+<div class="ParkingSpotButton @(Spot.Electric ? "Electric" : "Standard")" @onclick="HandleClick">
     <h2>@Spot.Name</h2>
     <p><strong>Location:</strong>@Spot.Location</p>
 </div>  

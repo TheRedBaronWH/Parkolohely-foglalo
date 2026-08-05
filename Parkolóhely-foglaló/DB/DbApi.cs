@@ -36,6 +36,30 @@ public static class DbApi
         }
     }
 
+    public static async Task<List<ParkingSpot>> GetFreeElectricParkingSpots(DateTime startingTime, DateTime endingTime)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            return await db.Spots
+                .Where(spot => spot.Electric && !db.Reservations.Any(reservation => reservation.ParkingSpotId == spot.Id &&
+                                        reservation.StartingTime < endingTime &&
+                                        reservation.EndingTime > startingTime))
+                .ToListAsync();
+        }
+    }
+
+    public static async Task<List<ParkingSpot>> GetFreeNormalParkingSpots(DateTime startingTime, DateTime endingTime)
+    {
+        using (var db = new ParkingDBContext())
+        {
+            return await db.Spots
+                .Where(spot => !spot.Electric && !db.Reservations.Any(reservation => reservation.ParkingSpotId == spot.Id &&
+                                        reservation.StartingTime < endingTime &&
+                                        reservation.EndingTime > startingTime))
+                .ToListAsync();
+        }
+    }
+
     public static async Task<List<ParkingSpotReservation>> GetReservations()
     {
         using (var db = new ParkingDBContext())
