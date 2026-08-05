@@ -1,5 +1,6 @@
 <Solution>
-  <Project Path="Parkolóhely-foglaló/Parkolóhely-foglaló.csproj" Id="6781646e-4501-4722-8aeb-990e313fadc3">
+  <Project Path="Parkolóhely-foglaló.Core/Parkolóhely-foglaló.Core.csproj" Id="fcd124d2-6542-4163-bb11-3d0636ddcd88" />
+  <Project Path="Parkolóhely-foglaló.MAUI/Parkolóhely-foglaló.MAUI.csproj" Id="955d8692-3ccf-4114-8f20-687baee8bd95">
     <Deploy Solution="Debug|*" />
   </Project>
 </Solution>

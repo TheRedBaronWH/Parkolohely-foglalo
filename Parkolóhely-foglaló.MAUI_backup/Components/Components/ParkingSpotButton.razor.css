@@ -1,0 +1,14 @@
+/* CSS for ParkingSpotButton component */
+.ParkingSpotButton {
+    border: 1px solid #000;
+    padding: 10px;
+    min-width: 100px;
+}
+
+.ParkingSpotButton.Electric {
+    background: #4cff00;
+}
+
+.ParkingSpotButton.Standard {
+    background: #afafaf;
+}
