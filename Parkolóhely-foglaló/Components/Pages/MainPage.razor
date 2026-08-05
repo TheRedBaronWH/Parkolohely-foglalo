@@ -2,20 +2,45 @@
 
 @page "/"
 
-<h1 class="PageTitle">Main Page</h1>
+<h1 class="PageTitle">Parking Spot Reserver Main Page</h1>
+
+<div class ="NameInput">
+    <label for="username">Username:</label>
+    <input id="username" type="text" placeholder="Please enter your name" @bind="user"/>
+</div>
+@if(!string.IsNullOrEmpty(message))
+{
+    <h2 class="PageText">@message</h2>
+}
 
 <div class="MainMenuButtons">
-    <button @onclick="NavigateToSpots"><h2>View Spots and Reservations</h2></button>
-    <button @onclick="NavigateToReserve"><h2>Reserve a spot</h2></button>
+    <button @onclick="NavigateToSpots">
+        <h2>View Spots and Reservations</h2>
+        </button>
+    <button @onclick="NavigateToReserve">
+        <h2>Reserve a spot</h2>
+    </button>
 </div>
 
 @code {
+    public string user = string.Empty;
+    public string message = string.Empty;
+
     private void NavigateToSpots()
     {
-        Navigation.NavigateTo("/spots");
+        if(string.IsNullOrEmpty(user)) {
+            message = "Please enter your username first.";
+            return;
+        }
+        Navigation.NavigateTo($"/spots-user:{user}");
     }
     private void NavigateToReserve()
     {
-        Navigation.NavigateTo("/reserve");
+        if (string.IsNullOrEmpty(user))
+        {
+            message = "Please enter your username first.";
+            return;
+        }
+        Navigation.NavigateTo($"/reserve-user:{user}");
     }
 }

@@ -8,9 +8,10 @@ namespace Parkolóhely_foglaló.Controller;
 
 public static class ReservationHandler
 {
-    public static async Task<bool> TryAddReservation(string user, ParkingSpot spot, DateTime startingTime, DateTime endingTime)
+    public static async Task TryAddReservation(string user, ParkingSpot spot, DateTime startingTime, DateTime endingTime)
     {
-        if (startingTime >= endingTime || startingTime < DateTime.Now) return false;
+        if (startingTime >= endingTime) throw new Exception("Starting time must be before ending time.");
+        if (startingTime < DateTime.Now.AddMinutes(-1)) throw new Exception("Starting time cannot be in the past.");
 
         ParkingSpotReservation reservation = new ParkingSpotReservation
         {
@@ -20,17 +21,17 @@ public static class ReservationHandler
             ReservedBy = user
         };
         await DbApi.AddReservation(reservation);
-        return true;
     }
 
-    public static async Task<bool> TryRemoveReservation(string user, ParkingSpotReservation reservation)
+    public static async Task TryRemoveReservation(string user, ParkingSpotReservation reservation)
     {
-        if(reservation.ReservedBy != user || user != "admin")
+        if (reservation.ReservedBy == user || user == "admin")
         {
-            return false;
+            await DbApi.RemoveReservation(reservation);
         }
-        
-        await DbApi.RemoveReservation(reservation);
-        return true;
+        else
+        {
+            throw new Exception("You are not the owner of this reservation.");
+        }
     }
 }

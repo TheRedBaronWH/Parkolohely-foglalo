@@ -1,12 +1,13 @@
 ﻿@using Parkolóhely_foglaló.Components.Components
 @using Parkolóhely_foglaló.DB
 @using Parkolóhely_foglaló.Model
+@using Parkolóhely_foglaló.Controller
 
-@page "/spots/{SpotId:int}"
+@page "/spots-user:{User}/{SpotId:int}"
 
-@if (errorMessage != null)
+@if (spotLoadErrorMessage != null)
 {
-    <h3 class="PageTitle"> @errorMessage </h3>
+    <h3 class="PageTitle"> @spotLoadErrorMessage </h3>
 }
 else if (spot == null)
 {
@@ -15,9 +16,15 @@ else if (spot == null)
 else
 {
     <h1 class="PageTitle"> Reservation at @spot.Name </h1>
-    @if (errorMessage != null)
+
+    @if (!string.IsNullOrEmpty(deletionMessage))
     {
-        <h3 class="PageText"> @errorMessage </h3>
+        <h3 class="PageText"> @deletionMessage </h3>
+    }
+
+    @if (reservationLoadErrorMessage != null)
+    {
+        <h3 class="PageText"> @reservationLoadErrorMessage </h3>
     }
     else if (reservations == null)
     {
@@ -32,7 +39,14 @@ else
         <div class="SpotReservationsGrid">
             @foreach (ParkingSpotReservation reservation in reservations)
             {
-                <ReservationDetails Reservation="@reservation"/>
+                @if (reservation.ReservedBy == User || User == "admin")
+                {
+                    <OwnedReservationDetails Reservation="@reservation" OnDeletionClicked="DeleteReservation" />
+                }
+                else
+                {
+                    <ReservationDetails Reservation="@reservation"/>
+                }
             }
         </div>
     }
@@ -41,21 +55,55 @@ else
 
 @code {
     [Parameter] public required int SpotId { get; set; }
+    [Parameter] public required string User { get; set; }
 
-    string? errorMessage = null;
+    string? spotLoadErrorMessage = null;
+    string? reservationLoadErrorMessage = null;
+    string? deletionMessage = null;
 
     ParkingSpot? spot = null;
     List<ParkingSpotReservation>? reservations = null;
     protected override async Task OnInitializedAsync()
     {
+        await PullParkingSpot();
+        await PullReservations();
+    }
+
+    private async Task PullParkingSpot()
+    {
         try
         {
             spot = await DbApi.GetParkingSpot(SpotId);
+        }
+        catch (Exception ex)
+        {
+            spotLoadErrorMessage = ex.Message;
+        }
+    }
+
+    private async Task PullReservations()
+    {
+        try
+        {
             reservations = await DbApi.GetReservationsForSpot(spot);
         }
         catch (Exception ex)
         {
-            errorMessage = ex.Message;
+            reservationLoadErrorMessage = ex.Message;
+        }
+    }
+
+    public async void DeleteReservation(ParkingSpotReservation reservation)
+    {
+        try
+        {
+            await ReservationHandler.TryRemoveReservation(User, reservation);
+            deletionMessage = "Reservation Deleted Successfully";
+            await PullReservations();
+        }
+        catch (Exception ex)
+        {
+            deletionMessage = ex.Message;
         }
     }
 }
