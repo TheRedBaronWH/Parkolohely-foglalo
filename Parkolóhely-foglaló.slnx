@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="Parkolóhely-foglaló.Core/Parkolóhely-foglaló.Core.csproj" />
   <Project Path="Parkolóhely-foglaló.MAUI/Parkolóhely-foglaló.MAUI.csproj" />
+  <Project Path="Parkolóhely-foglaló.Tests/Parkolóhely-foglaló.Tests.csproj" />
 </Solution>
