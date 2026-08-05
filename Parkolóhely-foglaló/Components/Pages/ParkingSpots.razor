@@ -24,7 +24,7 @@ else
     <div class="ParkingSpotsGrid">
         @foreach (ParkingSpot spot in parkingSpots)
         {
-            <ParkingSpotButton Spot="@spot" OnClick="() => NavigateToReservation(spot)"/>
+            <ParkingSpotButton Spot="@spot" OnSpotClicked="() => NavigateToReservation(spot)"/>
         }
     </div>
 }

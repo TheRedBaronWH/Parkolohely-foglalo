@@ -9,17 +9,18 @@
 
 @if(showMessage)
 {
-   <h2 class="PageText" style="color: @success ? 'green' : 'red'"> @message </h2>
+    <h2 class="PageText"> @message </h2>
 }
 
 <div class="DateSelectorsGrid">
-    <InputDate class="DateSelector" DisplayName="Starting Time" @bind-Value="startingTime" />
-    <InputDate class="DateSelector" DisplayName="Ending Time" @bind-Value="endingTime" />
+    <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="startingTime"/>
+    <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="endingTime"/>
+    <input type="text" placeholder="Reserved By" @bind="reservedBy" />
 </div>
 
-<input type="text" placeholder="Reserved By" @bind="reservedBy" />
-
-<button @onclick="Search">Search</button>
+<div class="SearchButtonDiv">
+    <button @onclick="Search"><h2>Search</h2></button>
+</div>
 
 @if(freeSpots!=null)
 {
@@ -32,10 +33,16 @@
         <div class="FreeParkingSpotsGrid">
             @foreach(ParkingSpot spot in freeSpots)
             {
-                <ParkingSpotButton Spot="spot" @onclick="() => SelectSpot(spot)"/>
+                <ParkingSpotButton Spot="spot" OnSpotClicked="() => SelectSpot(spot)" />
             }
         </div>
     }
+}
+
+@if(selectedSpot != null)
+{
+    <h2 class="PageText">Selected Spot: @selectedSpot.Name</h2>
+    <button @onclick="Reserve">Reserve selected spot</button>
 }
 
 @code {

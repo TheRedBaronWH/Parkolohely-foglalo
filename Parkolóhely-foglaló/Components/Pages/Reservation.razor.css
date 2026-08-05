@@ -8,9 +8,14 @@
     align-items: center;
 }
 
-.DateSelector {
-    min-width: 300px;
-    min-height: 300px;
+.SearchButtonDiv {
+    justify-self: center;
+    align-self: center;
+
+    button {
+        min-width: 100px;
+        min-height: 10px;
+    }
 }
 
 .FreeParkingSpotsGrid {

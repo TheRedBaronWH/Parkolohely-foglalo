@@ -7,11 +7,11 @@
 
 @code {
     [Parameter] public required ParkingSpot Spot { get; set; }
-    [Parameter] public required EventCallback<ParkingSpot> OnClick { get; set; }
+    [Parameter] public required EventCallback<ParkingSpot> OnSpotClicked { get; set; }
 
     public async Task HandleClick()
     {
-        OnClick.InvokeAsync(Spot);
+        OnSpotClicked.InvokeAsync(Spot);
     }
 }
 
