@@ -18,7 +18,19 @@ public class ParkingDBContext: DbContext
 
         Database.EnsureCreated();
 
-        if(!Spots.Any())
+        MockDatabaseIfEmpty();
+    }
+
+    public ParkingDBContext(DbContextOptions<ParkingDBContext> options) : base(options)
+    {
+        Database.EnsureCreated();
+
+        MockDatabaseIfEmpty();
+    }
+
+    public void MockDatabaseIfEmpty()
+    {
+        if (!Spots.Any())
         {
             Spots.AddRange(
                 new ParkingSpot { Row = 1, Column = 1, Electric = false },
@@ -48,6 +60,7 @@ public class ParkingDBContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (optionsBuilder.IsConfigured) return;
         optionsBuilder.UseSqlite($"Data Source={DbPath};Mode=ReadWriteCreate;Cache=Shared;");
         optionsBuilder.EnableSensitiveDataLogging();
     }

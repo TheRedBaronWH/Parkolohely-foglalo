@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Parkolóhely_foglaló.Model;
+
 public class ParkingSpot
 {
     [Key]
