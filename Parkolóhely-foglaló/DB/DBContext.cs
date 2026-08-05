@@ -21,12 +21,15 @@ public class ParkingDBContext: DbContext
         if(!Spots.Any())
         {
             Spots.AddRange(
-                new ParkingSpot { Row = 1, Column = 1 },
-                new ParkingSpot { Row = 1, Column = 2 },
-                new ParkingSpot { Row = 1, Column = 3 },
-                new ParkingSpot { Row = 2, Column = 1 },
-                new ParkingSpot { Row = 2, Column = 2 },
-                new ParkingSpot { Row = 2, Column = 3 }
+                new ParkingSpot { Row = 1, Column = 1, Electric = false },
+                new ParkingSpot { Row = 1, Column = 2, Electric = false },
+                new ParkingSpot { Row = 1, Column = 3, Electric = false },
+                new ParkingSpot { Row = 2, Column = 1, Electric = false },
+                new ParkingSpot { Row = 2, Column = 2, Electric = false },
+                new ParkingSpot { Row = 2, Column = 3, Electric = false },
+                new ParkingSpot { Row = 3, Column = 1, Electric = true },
+                new ParkingSpot { Row = 3, Column = 2, Electric = true },
+                new ParkingSpot { Row = 3, Column = 3, Electric = true }
             );
             SaveChanges();
         }
