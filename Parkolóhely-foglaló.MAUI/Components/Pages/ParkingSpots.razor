@@ -1,0 +1,66 @@
+﻿@using Parkolóhely_foglaló.MAUI.Components.Components
+@using Parkolóhely_foglaló.Core.DB
+@using Parkolóhely_foglaló.Core.Model
+
+@inject NavigationManager Navigation
+@inject IJSRuntime Js
+
+@page "/spots-user:{User}"
+
+<button class="BackButton" @onclick="GoBack"> Back </button>
+
+<h1 class="PageTitle">Parking Spots</h1>
+@if (errorMessage != null)
+{
+    <h3 class="PageText"> @errorMessage </h3>
+}
+else if (parkingSpots == null)
+{
+    <h3 class="PageText"> Loading... </h3>
+}
+else if (parkingSpots.Count() == 0)
+{
+    <h3 class="PageText"> No Parking Spots Available </h3>
+}
+else
+{
+    <div class="ParkingSpotsGrid">
+        @foreach (ParkingSpot spot in parkingSpots)
+        {
+            <ParkingSpotButton Spot="@spot" OnSpotClicked="() => NavigateToReservation(spot)"/>
+        }
+    </div>
+}
+
+
+@code {
+    [Parameter] public required string User { get; set; }
+
+    string? errorMessage = null;
+    List<ParkingSpot>? parkingSpots = null;
+    protected override async Task OnInitializedAsync() {
+        await PullParkingSpots();
+    }
+
+    private async Task PullParkingSpots()
+    {
+        try
+        {
+            parkingSpots = await ParkingDbApi.GetParkingSpots();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    public void NavigateToReservation(ParkingSpot spot)
+    {
+        Navigation.NavigateTo($"/spots-user:{User}/{spot.Id}");
+    }
+
+    public async Task GoBack()
+    {
+        await Js.InvokeVoidAsync("history.back");
+    }
+}

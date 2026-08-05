@@ -1,0 +1,17 @@
+﻿@using Parkolóhely_foglaló.Core.Model
+
+<div class="ParkingSpotButton @(Spot.Electric ? "Electric" : "Standard")" @onclick="HandleClick">
+    <h2>@Spot.Name</h2>
+    <p><strong>Location:</strong>@Spot.Location</p>
+</div>  
+
+@code {
+    [Parameter] public required ParkingSpot Spot { get; set; }
+    [Parameter] public required EventCallback<ParkingSpot> OnSpotClicked { get; set; }
+
+    public async Task HandleClick()
+    {
+        OnSpotClicked.InvokeAsync(Spot);
+    }
+}
+

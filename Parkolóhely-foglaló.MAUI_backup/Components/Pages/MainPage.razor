@@ -1,0 +1,54 @@
+﻿@inject NavigationManager Navigation
+
+@page "/"
+
+<h1 class="PageTitle">Parking Spot Reserver Main Page</h1>
+
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <h2 class="PageText">@message</h2>
+}
+
+<div class ="InputDiv">
+    <label for="username">Username:</label>
+    <input id="username" type="text" placeholder="Please enter your name" @bind="user"/>
+</div>
+<div class="InputDiv">
+    <label for="electric">Do you have an electric car and wish to charge?</label>
+    <input id="electric" type="checkbox" @bind="electric" />
+</div>
+<br/>
+
+<div class="MainMenuButtons">
+    <button @onclick="NavigateToSpots">
+        <h2>View Spots and Reservations</h2>
+        </button>
+    <button @onclick="NavigateToReserve">
+        <h2>Reserve a spot</h2>
+    </button>
+</div>
+
+@code {
+    public string user = string.Empty;
+    public bool electric = false;
+    public string message = string.Empty;
+
+    private void NavigateToSpots()
+    {
+        if(string.IsNullOrEmpty(user)) {
+            message = "Please enter your username first.";
+            return;
+        }
+        Navigation.NavigateTo($"/spots-user:{user}");
+    }
+    private void NavigateToReserve()
+    {
+        if (string.IsNullOrEmpty(user))
+        {
+            message = "Please enter your username first.";
+            return;
+        }
+        Navigation.NavigateTo($"/reserve-user:{user}-electric:{electric}");
+    }
+}

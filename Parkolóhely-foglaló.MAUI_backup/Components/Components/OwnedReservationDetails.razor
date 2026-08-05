@@ -1,0 +1,18 @@
+﻿@using Parkolóhely_foglaló.Core.Model
+
+<div class="ReservationDetails">
+    <h1>From @Reservation.StartingTime until @Reservation.EndingTime</h1>
+    <h2>Reservation ID: @Reservation.Id</h2>
+    <h2>Reserved By: @Reservation.ReservedBy</h2>
+    <button @onclick="HandleDeletionClick">Delete Reservation</button>
+</div>
+
+@code {
+    [Parameter] public required ParkingSpotReservation Reservation { get; set; }
+    [Parameter] public required EventCallback<ParkingSpotReservation> OnDeletionClicked { get; set; }
+
+    public async Task HandleDeletionClick()
+    {
+        OnDeletionClicked.InvokeAsync(Reservation);
+    }
+}
