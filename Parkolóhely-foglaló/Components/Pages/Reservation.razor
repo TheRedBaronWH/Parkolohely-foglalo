@@ -1,0 +1,97 @@
+﻿@using Parkolóhely_foglaló.Components.Components
+@using Parkolóhely_foglaló.DB
+@using Parkolóhely_foglaló.Controller
+@using Parkolóhely_foglaló.Model
+
+@page "/reserve"
+
+<h1 class="PageTitle">Reservation</h1>
+
+@if(showMessage)
+{
+   <h2 class="PageText" style="color: @success ? 'green' : 'red'"> @message </h2>
+}
+
+<div class="DateSelectorsGrid">
+    <InputDate class="DateSelector" DisplayName="Starting Time" @bind-Value="startingTime" />
+    <InputDate class="DateSelector" DisplayName="Ending Time" @bind-Value="endingTime" />
+</div>
+
+<input type="text" placeholder="Reserved By" @bind="reservedBy" />
+
+<button @onclick="Search">Search</button>
+
+@if(freeSpots!=null)
+{
+    if(freeSpots.Count == 0)
+    {
+        <h2 class="PageText">No free parking spots available at the selected timeslot.</h2>
+    }
+    else
+    {
+        <div class="FreeParkingSpotsGrid">
+            @foreach(ParkingSpot spot in freeSpots)
+            {
+                <ParkingSpotButton Spot="spot" @onclick="() => SelectSpot(spot)"/>
+            }
+        </div>
+    }
+}
+
+@code {
+    public DateTime startingTime { get; set; } = DateTime.Now;
+    public DateTime endingTime { get; set; } = DateTime.Now.AddHours(1);
+    public string reservedBy { get; set; } = string.Empty;
+
+    public async Task Search()
+    {
+        if (startingTime < DateTime.Now)
+        {
+            success = false;
+            message = "Starting time must be in the future!";
+            showMessage = true;
+            return;
+        }
+        if (endingTime <= startingTime)
+        {
+            success = false;
+            message = "Ending time must be after starting time!";
+            showMessage = true;
+            return;
+        }
+        freeSpots = await DbApi.GetFreeParkingSpots(startingTime, endingTime);
+    }
+
+    public List<ParkingSpot>? freeSpots = null;
+    public ParkingSpot? selectedSpot = null;
+
+    public async Task SelectSpot(ParkingSpot spot)
+    {
+        selectedSpot = spot;
+    }
+
+    public bool showMessage = false;
+    public bool success = false;
+    public string message = string.Empty;
+
+    public async Task Reserve()
+    {
+        if (selectedSpot == null)
+        {
+            success = false;
+            message = "Please select a Parking Spot!";
+            showMessage = true;
+            return;
+        }
+        if (string.IsNullOrEmpty(reservedBy))
+        {
+            success = false;
+            message = "Please enter your name!";
+            showMessage = true;
+            return;
+        }
+        success = await ReservationHandler.TryAddReservation(reservedBy, selectedSpot, startingTime, endingTime);
+        message = success ? "Reservation Successful" : "Reservation Failed. Please check the starting time and ending time!";
+        showMessage = true;
+    }
+}

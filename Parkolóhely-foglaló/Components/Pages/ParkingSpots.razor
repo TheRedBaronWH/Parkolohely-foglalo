@@ -1,0 +1,50 @@
+﻿@using Parkolóhely_foglaló.Components.Components
+@using Parkolóhely_foglaló.DB
+@using Parkolóhely_foglaló.Model
+
+@inject NavigationManager Navigation
+
+@page "/spots"
+
+<h1 class="PageTitle">Parking Spots</h1>
+@if (errorMessage != null)
+{
+    <h3 class="PageText"> @errorMessage </h3>
+}
+else if (parkingSpots == null)
+{
+    <h3 class="PageText"> Loading... </h3>
+}
+else if (parkingSpots.Count() == 0)
+{
+    <h3 class="PageText"> No Parking Spots Available </h3>
+}
+else
+{
+    <div class="ParkingSpotsGrid">
+        @foreach (ParkingSpot spot in parkingSpots)
+        {
+            <ParkingSpotButton Spot="@spot" OnClick="() => NavigateToReservation(spot)"/>
+        }
+    </div>
+}
+
+
+@code {
+    string? errorMessage = null;
+    List<ParkingSpot>? parkingSpots = null;
+    protected override async Task OnInitializedAsync() {
+        try {
+            parkingSpots = await DbApi.GetParkingSpots();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    public void NavigateToReservation(ParkingSpot spot)
+    {
+        Navigation.NavigateTo($"/spots/{spot.Id}");
+    }
+}

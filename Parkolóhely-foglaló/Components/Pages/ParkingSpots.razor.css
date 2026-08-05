@@ -1,0 +1,19 @@
+/* CSS for ParkingSpots component */
+.ParkingSpotsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 16px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.PageTitle {
+    width: 100vw;
+    text-align: center;
+}
+
+.PageText {
+    width: 100vw;
+    text-align: center;
+}

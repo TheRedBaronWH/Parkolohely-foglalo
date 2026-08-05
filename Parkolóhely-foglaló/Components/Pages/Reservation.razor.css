@@ -1,0 +1,33 @@
+/* CSS for Reservation component */
+.DateSelectorsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.DateSelector {
+    min-width: 300px;
+    min-height: 300px;
+}
+
+.FreeParkingSpotsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 16px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.PageTitle {
+    width: 100vw;
+    text-align: center;
+}
+
+.PageText {
+    width: 100vw;
+    text-align: center;
+}

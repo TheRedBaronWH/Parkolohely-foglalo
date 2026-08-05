@@ -1,0 +1,19 @@
+/* CSS for MainPage component */
+.MainMenuButtons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+
+    button {
+        background: #afafaf;
+        border: 1px solid #000;
+        padding: 10px;
+        min-width: 100px;
+        min-height: 100px;
+    }
+}
+
+.PageTitle {
+    width : 100vw;
+    text-align : center;
+}

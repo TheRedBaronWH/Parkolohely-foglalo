@@ -1,0 +1,6 @@
+.ParkingSpotButton {
+    background: #afafaf;
+    border: 1px solid #000;
+    padding: 10px;
+    min-width: 100px;
+}
