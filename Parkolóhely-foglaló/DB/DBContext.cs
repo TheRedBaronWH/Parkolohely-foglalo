@@ -39,7 +39,7 @@ public class ParkingDBContext: DbContext
                 new ParkingSpotReservation { ParkingSpotId = 1, StartingTime = DateTime.Now, EndingTime = DateTime.Now.AddDays(1), ReservedBy = "Anita" },
                 new ParkingSpotReservation { ParkingSpotId = 2, StartingTime = new DateTime(2026, 12, 20, 12, 00, 00), EndingTime = new DateTime(2026, 12, 21, 21, 00, 00), ReservedBy = "Johnny" },
                 new ParkingSpotReservation { ParkingSpotId = 3, StartingTime = DateTime.Now, EndingTime = DateTime.Now.AddMonths(1), ReservedBy = "admin" },
-                new ParkingSpotReservation { ParkingSpotId = 1, StartingTime = new DateTime(2026, 08, 06, 18, 05, 00), EndingTime = new DateTime(2026, 08, 06, 18, 50, 00), ReservedBy = "Melinda" },
+                new ParkingSpotReservation { ParkingSpotId = 1, StartingTime = DateTime.Now.AddDays(1).AddHours(-5), EndingTime = DateTime.Now.AddDays(1).AddHours(-3), ReservedBy = "Melinda" },
                 new ParkingSpotReservation { ParkingSpotId = 7, StartingTime = DateTime.Now, EndingTime = DateTime.Now.AddDays(1), ReservedBy = "Scott" }
             );
             SaveChanges();
