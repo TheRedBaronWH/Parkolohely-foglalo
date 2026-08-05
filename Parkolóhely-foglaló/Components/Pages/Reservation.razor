@@ -12,16 +12,21 @@
     <h2 class="PageText"> @message </h2>
 }
 
-<div class="DateSelectorsGrid">
+<div class="DateSelector">
     <label for="startingTime">Starting Time:</label>
     <InputDate id="startingTime" Type="InputDateType.DateTimeLocal" @bind-Value="startingTime"/>
+</div>
+<br/>
+<div class="DateSelector">
     <label for="endingTime">Ending Time:</label>
     <InputDate id="endingTime" Type="InputDateType.DateTimeLocal" @bind-Value="endingTime"/>
 </div>
+<br/>
 
-<div class="SearchButtonDiv">
+<div class="ButtonDiv">
     <button @onclick="Search"><h2>Search</h2></button>
 </div>
+<br/>
 
 @if(freeSpots!=null)
 {
@@ -43,7 +48,9 @@
 @if(selectedSpot != null)
 {
     <h2 class="PageText">Selected Spot: @selectedSpot.Name</h2>
-    <button @onclick="Reserve">Reserve selected spot</button>
+    <div class="ButtonDiv">
+        <button @onclick="Reserve"><h2>Reserve selected spot</h2></button>
+    </div>
 }
 
 @code {
@@ -54,7 +61,7 @@
 
     public async Task Search()
     {
-        if (startingTime < DateTime.Now)
+        if (startingTime < DateTime.Now.AddMinutes(-1))
         {
             message = "Starting time must be in the future!";
             return;

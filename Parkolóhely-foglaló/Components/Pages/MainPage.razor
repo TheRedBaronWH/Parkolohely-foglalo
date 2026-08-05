@@ -4,14 +4,17 @@
 
 <h1 class="PageTitle">Parking Spot Reserver Main Page</h1>
 
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <h2 class="PageText">@message</h2>
+}
+
 <div class ="NameInput">
     <label for="username">Username:</label>
     <input id="username" type="text" placeholder="Please enter your name" @bind="user"/>
 </div>
-@if(!string.IsNullOrEmpty(message))
-{
-    <h2 class="PageText">@message</h2>
-}
+<br/>
 
 <div class="MainMenuButtons">
     <button @onclick="NavigateToSpots">
