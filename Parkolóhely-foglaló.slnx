@@ -3,5 +3,4 @@
   <Project Path="Parkolóhely-foglaló.MAUI/Parkolóhely-foglaló.MAUI.csproj" Id="955d8692-3ccf-4114-8f20-687baee8bd95">
     <Deploy Solution="Debug|*" />
   </Project>
-  <Project Path="Parkolóhely-foglaló.Tests/Parkolóhely-foglaló.Tests.csproj" Id="6220d604-1e3b-4696-81c1-ac1c9fc95df4" />
 </Solution>
