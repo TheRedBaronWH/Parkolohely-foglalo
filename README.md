@@ -18,7 +18,8 @@ A .NET MAUI-t pedig a .NET 10 letöltése után, a következő paranccsal lehet 
     dotnet workload install maui
 
 ### Futtatás
-Ha az előfeltétel teljesül, az alkalmazás elindításához egyetlen parancsot kell lefuttatni, Windows 10, 2004-es verzión vagy újabban (Windows 11 is működik), a Parkolóhely-foglaló.MAUI project mappában:  
+Ha az előfeltétel teljesül, az alkalmazás elindításához egyetlen parancsot kell lefuttatni, Windows 10, 2004-es verzión vagy újabban (Windows 11 is működik), a [Parkolóhely-foglaló.MAUI](/Parkolóhely-foglaló.MAUI/)
+mappában:  
 
     dotnet run
 
