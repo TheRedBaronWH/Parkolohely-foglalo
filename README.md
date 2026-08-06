@@ -1,5 +1,5 @@
 # Parkolóhely-foglaló
-Ebben a repositoryban egy lokálisan futó, adatbázist használó, parkolóhely foglaló található
+Ebben a repositoryban egy lokálisan futó, adatbázist használó, parkolóhely foglaló található  
 Készítette: Bencze János István
 
 ## Repó szerkezete:
