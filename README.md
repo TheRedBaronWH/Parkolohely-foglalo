@@ -1,5 +1,6 @@
 # Parkolóhely-foglaló
 Ebben a repositoryban egy lokálisan futó, adatbázist használó, parkolóhely foglaló található
+Készítette: Bencze János István
 
 ## Repó szerkezete:
 Minden doksi (Felhasználói kézikönyv, API Leírás, Rendszerterv, Döntési napló, Gemini extract és eredeti feladat kiadvány) a [/Docs](/Docs/) mappában
